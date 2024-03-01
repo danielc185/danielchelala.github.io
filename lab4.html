@@ -4,17 +4,48 @@
     </head>
 
     <body>
-        <h1>I am html</h1>
         <script>
-            var firstnumber,
-                secondnumber,
-                
-                sum;
-            firstnumber = window.prompt("Enter your first number: ");
-            secondnumber = window.prompt("Enter your second number: ");
+            var name,
+                item,
+                quantity;
+            now = new Date();
+            hour = now.getHours();
+            var year = now.getFullYear();
+            var month = now.getMonth() + 1;
+
             
-            sum = parseInt(firstnumber) + parseInt(secondnumber);
-            window.alert("Sum = " + sum)
+            window.alert("Welcome to the store!")
+            name = window.prompt("What is your name?")
+            item = window.prompt("What is the item that you would like to order?")
+            quantity = window.prompt("What is the quantity of the item that you would like to order? (Enter a number between 1 and 99.)")
+            if(parseInt(quantity) < 1 || parseInt(quantity) > 99){
+                window.alert("Sorry! That is an invalid quantity.");
+                document.write("<h1>Your order could not be completed.");
+            }
+            else{
+                if(hour < 12){
+                    document.write("<h1>Good morning ");
+                }
+                else if(hour < 18){
+                    document.write("<h1>Good afternoon ");
+                }
+                else{
+                    document.write("<h1>Good evening ");
+                }
+                document.writeln(name + ".");
+                if(parseInt(quantity) == 1){
+                    document.writeln("<h2>Your order for 1 unit of \"" + item + "\" is complete!")
+                }
+                else{
+                    document.writeln("<h2>Your order for " + quantity + " units of \"" + item + "\" is complete!")
+                }
+                if(parseInt(month) == 12){
+                    document.write("<p>Expected delivery date: " + (month + 1) % 12 + "/" + 15 + "/" + (parseInt(year) + 1) + " - " + month + "/" + 21 + "/" + (parseInt(year) + 60));
+                }
+                else{
+                    document.write("<p>Expected delivery date: " + (month + 1) % 12 + "/" + 15 + "/" + year + " - " + month + "/" + 21 + "/" + (parseInt(year) + 60));
+                }
+            }
         </script>
     </body>
 </html>
