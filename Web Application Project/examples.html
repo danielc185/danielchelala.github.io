@@ -14,24 +14,20 @@
     <!-- latest jQuery library -->
     <script src="https://code.jquery.com/jquery-latest.js"></script>
 
-    <title>Homepage</title>
+    <title>Basic</title>
 
     <style>
-        /* body {
-            background-color: rgb(244, 61, 61);
-        }
-        */
-
-        .home-banner {
-            margin-top: 20px;
-        }
-
-        .home-banner-content {
+        .selections {
             color: white;
             font-size: 1.5em;
             background: rgba(0, 0, 0, 0.6);
             padding: 20px;
             border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .btn-margin {
+            margin-top: 10px;
         }
 
         .image-box {
@@ -48,54 +44,49 @@
             height: auto;
             object-fit: contain;
         }
-
-        
     </style>
 </head>
 <body>
     <nav class = "navbar navbar-expand-lg navbar-dark bg-info">
         <div class = "container">
             <div class = "navbar-nav">
-                <a class = "nav-link active" href = "home.html">Home</a>
-                <a class = "nav-link" href = "examples.html">Examples</a>
+                <a class = "nav-link" href = "home.html">Home</a>
+                <a class = "nav-link active" href = "examples.html">Examples</a>
                 <a class = "nav-link" href = "advanced.html">Advanced</a>
             </div>
         </div>
     </nav>
     <div class = "container">
-        <div class = "home-banner">
-            <div class = "home-banner-content-container">
-                <div class = "home-banner-content container">
-                    <div class = "jumbotron">
-                        <center>
-                            <h1 class = "display-3">Welcome to ___!</h1>
-                            <p class = "lead">The place to be when you desparately need a cat picture</p>
-                        </center>
-                    </div>
+        <div class = "row">
+            <div class = "col-12 col-md-3">
+                <div class = "selections">
+                    <p class = "lead">Click one of the buttons below to see some API usage examples!</p>
+                    <button onclick = "callCat('random')" class = "btn btn-danger btn-lg">Random cat</button>
+                    <button onclick = "callCat('orange')" class = "btn btn-primary btn-lg btn-margin">Random orange cat</button>
+                    <button onclick = "callCat('meow')" class = "btn btn-warning btn-lg btn-margin">Random cat with meow text</button>
                 </div>
             </div>
-        <div class = "home-banner">
-            <div class = "home-banner-content-container">
-                <div class = "home-banner-content container">
-                    <div class = "random-cat">
-                        <center>
-                            <p class = "lead">Click the button below to generate a random cat image!</p>
-                            <button onclick = "callAPI()" class = "btn btn-danger btn-lg">Generate cat image now!</button>
-                        </center>
-                    </div>
+            <div class = "col-12 col-md-9">
+                <div class = "image-box">
+                    <img id = "image">
                 </div>
             </div>
-        </div>
-        <div class = "image-box">
-            <center>
-                <img id = "image">
-            </center>
-        </div>
         </div>
     </div>
     <script>
-        function callAPI(){
-            fetch('https://cataas.com/cat', {
+        function callCat(keyword){
+            if(keyword == 'random'){
+                fetchURL('https://cataas.com/cat');
+            }
+            else if(keyword == 'orange'){
+                fetchURL('https://cataas.com/cat/orange');
+            }
+            else if(keyword == 'meow'){
+                fetchURL('https://cataas.com/cat/says/meow');
+            }
+        }
+        function fetchURL(url){
+            fetch(url, {
                 method: 'GET'
             })
             .then(response => response.blob())
@@ -103,7 +94,9 @@
                 const photo = URL.createObjectURL(blob);
                 document.getElementById("image").src = photo;
             })
+            .catch(error => console.error('Error fetching image:', error));
         }
+        
     </script>
 </body>
 </html>
