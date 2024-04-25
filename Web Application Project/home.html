@@ -41,12 +41,14 @@
             padding: 20px;
             border-radius: 5px;
             margin-top: 20px;
+            display: none;
         }
 
         .image-box img {
             max-width: 100%;
             height: auto;
             object-fit: contain;
+            max-height: 70vh;
         }
 
         
@@ -91,8 +93,8 @@
                 <img id = "image">
             </center>
         </div>
-        </div>
     </div>
+</div>
     <script>
         function callAPI(){
             fetch('https://cataas.com/cat', {
@@ -102,7 +104,9 @@
             .then(blob => {
                 const photo = URL.createObjectURL(blob);
                 document.getElementById("image").src = photo;
+                document.querySelector(".image-box").style.display = 'block';
             })
+            .catch(error => console.error('Error fetching image:', error));
         }
     </script>
 </body>
