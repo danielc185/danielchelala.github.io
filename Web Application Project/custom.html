@@ -14,7 +14,7 @@
     <!-- latest jQuery library -->
     <script src="https://code.jquery.com/jquery-latest.js"></script>
 
-    <title>Examples</title>
+    <title>Custom</title>
 
     <style>
         .selections {
@@ -68,10 +68,50 @@
                     <form id = "catForm">
                         Tag: <input type = "text" name = "tag" size = "13" class = "form-control"><br>
                         Text: <input type = "text" name = "text" size = "13" class = "form-control"><br>
-                        Font Style: <select class = "form-control" name = "fontStyle">
-                            <option value>--</option>
-                            <option value = "Anadale Mono">Anadale Mono</option>
+                        Font Style: <select class = "form-control" name = "fontStyle" style = "margin-bottom: 10px;">
+                            <option value>---</option>
+                            <option value = "Andale%20Mono">Andale Mono</option>
                             <option value = "Impact">Impact</option>
+                            <option value = "Arial">Arial</option>
+                            <option value = "Arial%20Black">Arial Black</option>
+                            <option value = "Comic%20Sans%20MS">Comic Sans MS</option>
+                            <option value = "Courier%20New">Courier New</option>
+                            <option value = "Georgia">Georgia</option>
+                            <option value = "Times%20New%20Roman">Times New Roman</option>
+                            <option value = "Verdana">Verdana</option>
+                            <option value = "Webdings">Webdings</option>
+                        </select>
+                        Font Size: <input type = "range" name = "fontSizeInput" id = "fontSizeInput" value = "30" class = "form-range" min = "10" max = "100"><span id = "fontSizeValue"></span><br>    
+                        Font Text Color: <select class = "form-control" name = "fontTextColor" style = "margin-bottom: 10px;">
+                            <option value>---</option>
+                            <option value = "red">Red</option>
+                            <option value = "orange">Orange</option>
+                            <option value = "yellow">Yellow</option>
+                            <option value = "green">Green</option>
+                            <option value = "blue">Blue</option>
+                            <option value = "purple">Purple</option>
+                            <option value = "pink">Pink</option>
+                            <option value = "white">White</option>
+                            <option value = "black">Black</option>
+                            <option value = "gray">Gray</option>
+                        </select>
+                        Font Background Color: <select class = "form-control" name = "fontBackgroundColor" style = "margin-bottom: 10px;">
+                            <option value>---</option>
+                            <option value = "red">Red</option>
+                            <option value = "orange">Orange</option>
+                            <option value = "yellow">Yellow</option>
+                            <option value = "green">Green</option>
+                            <option value = "blue">Blue</option>
+                            <option value = "purple">Purple</option>
+                            <option value = "pink">Pink</option>
+                            <option value = "white">White</option>
+                            <option value = "black">Black</option>
+                            <option value = "gray">Gray</option>
+                        </select>
+                        Filter: <select class = "form-control" name = "filter" style = "margin-bottom: 10px;">
+                            <option value>---</option>
+                            <option value = "mono">Mono</option>
+                            <option value = "negate">Negate</option>
                         </select>
                     </form>
                     <button onclick = "createAPIrequest()" class = "btn btn-danger form-control form-label btn-lg" style = "margin-top: 20px;">Generate image</button>
@@ -91,10 +131,58 @@
             var tag = document.forms["catForm"].elements["tag"].value;
             var text = document.forms["catForm"].elements["text"].value;
             var fontStyle = document.forms["catForm"].elements["fontStyle"].value;
+            var fontSize = document.forms["catForm"].elements["fontSizeInput"].value;
+            var fontTextColor = document.forms["catForm"].elements["fontTextColor"].value;
+            var fontBackgroundColor = document.forms["catForm"].elements["fontBackgroundColor"].value;
+            var filter = document.forms["catForm"].elements["filter"].value;
 
-            var apiURL = tag + text + fontStyle;
-            apiURL = apiURL;
-            document.writeln(apiURL);
+            var apiURL = "https://cataas.com/cat";
+            if(tag.length > 0){
+                apiURL += "/" + tag;
+            }
+            if(text.length > 0){
+                apiURL += "/says/" + text;
+            }
+            if(fontStyle.length > 0){
+                apiURL += "?font=" + fontStyle;
+            }
+            if(text.length > 0 && fontSize.length > 0){
+                if(!apiURL.includes("?")){
+                    apiURL += "?";
+                }
+                else{
+                    apiURL += "&";
+                }
+                apiURL += "fontSize=" + fontSize;
+            }
+            if(text.length > 0 && fontTextColor.length > 0){
+                if(!apiURL.includes("?")){
+                    apiURL += "?";
+                }
+                else{
+                    apiURL += "&";
+                }
+                apiURL += "fontColor=" + fontTextColor;
+            }
+            if(text.length > 0 && fontBackgroundColor.length > 0){
+                if(!apiURL.includes("?")){
+                    apiURL += "?";
+                }
+                else{
+                    apiURL += "&";
+                }
+                apiURL += "fontBackground=" + fontBackgroundColor;
+            }
+            if(filter.length > 0){
+                if(!apiURL.includes("?")){
+                    apiURL += "?";
+                }
+                else{
+                    apiURL += "&";
+                }
+                apiURL += "filter=" + filter;
+            }
+            fetchURL(apiURL);
         }
         function fetchURL(url){
             fetch(url, {
@@ -108,6 +196,13 @@
             })
             .catch(error => console.error('Error fetching image:', error));
         }
+
+        const fontSizeInput = document.getElementById("fontSizeInput");
+        const fontSizeValue = document.getElementById("fontSizeValue");
+        fontSizeValue.textContent = fontSizeInput.value;
+        fontSizeInput.addEventListener("input", function() {
+            fontSizeValue.textContent = fontSizeInput.value;
+        });
     </script>
 </body>
 </html>
