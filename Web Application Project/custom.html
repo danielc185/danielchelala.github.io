@@ -113,6 +113,17 @@
                             <option value = "mono">Mono</option>
                             <option value = "negate">Negate</option>
                         </select>
+                        <fieldset>
+                            <legend>Show request URL:</legend>
+                            <div>
+                                <input type = "radio" id = "show" name = "showURL" style = "margin-bottom: 10px;"/>
+                                <label for = "show">Show</label>
+                            </div>
+                            <div>
+                                <input type = "radio" id = "hide" name = "showURL" style = "margin-bottom: 10px;" checked/>
+                                <label for "hide">Hide</label>
+                            </div>
+                        </fieldset>
                     </form>
                     <button onclick = "createAPIrequest()" class = "btn btn-danger form-control form-label btn-lg" style = "margin-top: 20px;">Generate image</button>
                 </div>
@@ -120,6 +131,7 @@
             <div class = "col-12 col-md-8 col-lg-9">
                 <div class = "image-box">
                     <center>
+                        <h3 id = "request-URL"></h3>
                         <img id = "image">
                     </center>
                 </div>
@@ -183,6 +195,13 @@
                 apiURL += "filter=" + filter;
             }
             fetchURL(apiURL);
+            if (document.getElementById("show").checked){
+                document.getElementById("request-URL").innerHTML = "Request URL: " + apiURL;
+                document.getElementById("request-URL").style.display = "block";
+            }
+            else{
+                document.getElementById("request-URL").style.display = "none";
+            }
         }
         function fetchURL(url){
             fetch(url, {
