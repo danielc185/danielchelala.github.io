@@ -106,7 +106,11 @@
             .then(response => response.blob())
             .then(blob => {
                 const photo = URL.createObjectURL(blob);
-                document.getElementById("image").src = photo;
+                const imgElement = document.getElementById("image");
+                imgElement.onload = () => {
+                    document.querySelector(".image-box").scrollIntoView({behavior: "smooth"});
+                };
+                imgElement.src = photo;
                 document.querySelector(".image-box").style.display = 'block';
             })
             .catch(error => console.error('Error fetching image:', error));
