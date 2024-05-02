@@ -82,7 +82,7 @@
                             <option value = "Webdings">Webdings</option>
                         </select>
                         Font Size: <input type = "range" name = "fontSizeInput" id = "fontSizeInput" value = "30" class = "form-range" min = "10" max = "100"><span id = "fontSizeValue"></span><br>    
-                        Font Text Color: <select class = "form-control" name = "fontTextColor" style = "margin-bottom: 10px;">
+                        Text Color: <select class = "form-control" name = "fontTextColor" style = "margin-bottom: 10px;">
                             <option value>---</option>
                             <option value = "red">Red</option>
                             <option value = "orange">Orange</option>
@@ -95,7 +95,7 @@
                             <option value = "black">Black</option>
                             <option value = "gray">Gray</option>
                         </select>
-                        Font Background Color: <select class = "form-control" name = "fontBackgroundColor" style = "margin-bottom: 10px;">
+                        Text Background Color: <select class = "form-control" name = "textBackgroundColor" style = "margin-bottom: 10px;">
                             <option value>---</option>
                             <option value = "red">Red</option>
                             <option value = "orange">Orange</option>
@@ -155,7 +155,7 @@
             var fontStyle = document.forms["catForm"].elements["fontStyle"].value;
             var fontSize = document.forms["catForm"].elements["fontSizeInput"].value;
             var fontTextColor = document.forms["catForm"].elements["fontTextColor"].value;
-            var fontBackgroundColor = document.forms["catForm"].elements["fontBackgroundColor"].value;
+            var textBackgroundColor = document.forms["catForm"].elements["textBackgroundColor"].value;
             var filter = document.forms["catForm"].elements["filter"].value;
 
             var apiURL = "https://cataas.com/cat";
@@ -186,14 +186,14 @@
                 }
                 apiURL += "fontColor=" + fontTextColor;
             }
-            if(text.length > 0 && fontBackgroundColor.length > 0){
+            if(text.length > 0 && textBackgroundColor.length > 0){
                 if(!apiURL.includes("?")){
                     apiURL += "?";
                 }
                 else{
                     apiURL += "&";
                 }
-                apiURL += "fontBackground=" + fontBackgroundColor;
+                apiURL += "fontBackground=" + textBackgroundColor;
             }
             if(filter.length > 0){
                 if(!apiURL.includes("?")){
