@@ -155,7 +155,7 @@
             if(text.length > 0){
                 apiURL += "/says/" + text;
             }
-            if(fontStyle.length > 0){
+            if(text.length > 0 && fontStyle.length > 0){
                 apiURL += "?font=" + fontStyle;
             }
             if(text.length > 0 && fontSize.length > 0){
