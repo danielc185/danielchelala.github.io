@@ -54,7 +54,7 @@
     <nav class = "navbar navbar-expand-lg navbar-dark bg-info">
         <div class = "container">
             <div class = "navbar-nav">
-                <a class = "nav-link active" href = "home.html">Home</a>
+                <a class = "nav-link active" href = "home.html"><b>Home</b></a>
                 <a class = "nav-link" href = "examples.html">Examples</a>
                 <a class = "nav-link" href = "custom.html">Custom</a>
             </div>
@@ -93,6 +93,7 @@
 </div>
     <script>
         function callAPI(){
+            //requests random cat image
             fetch('https://cataas.com/cat', {
                 method: 'GET'
             })
@@ -100,10 +101,12 @@
             .then(blob => {
                 const photo = URL.createObjectURL(blob);
                 const imgElement = document.getElementById("image");
+                //used to automatically scroll image into view once generated
                 imgElement.onload = () => {
                     document.querySelector(".image-box").scrollIntoView({behavior: "smooth"});
                 };
                 imgElement.src = photo;
+                //reveals box containing image
                 document.querySelector(".image-box").style.display = "block";
             })
             .catch(error => console.error('Error fetching image:', error));

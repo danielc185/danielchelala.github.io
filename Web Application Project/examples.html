@@ -55,7 +55,7 @@
         <div class = "container">
             <div class = "navbar-nav">
                 <a class = "nav-link" href = "home.html">Home</a>
-                <a class = "nav-link active" href = "examples.html">Examples</a>
+                <a class = "nav-link active" href = "examples.html"><b>Examples</b></a>
                 <a class = "nav-link" href = "custom.html">Custom</a>
             </div>
         </div>
@@ -82,6 +82,7 @@
         </div>
     </div>
     <script>
+        //makes API request by using fetchURL function with pre-selected URL depending on which button on page was clicked
         function callCat(keyword){
             if(keyword == 'orange'){
                 fetchURL('https://cataas.com/cat/orange');
@@ -95,10 +96,12 @@
             else if(keyword == 'custom'){
                 fetchURL('https://cataas.com/cat/white/says/meow?fontColor=red&fontBackground=black&filter=negate&fontSize=100&font=Comic%20Sans%20MS')
             }
+            //image generated is random with no inputs
             else{
                 fetchURL('https://cataas.com/cat');
             }
         }
+        //takes in URL from callCat function
         function fetchURL(url){
             fetch(url, {
                 method: 'GET'
@@ -107,10 +110,12 @@
             .then(blob => {
                 const photo = URL.createObjectURL(blob);
                 const imgElement = document.getElementById("image");
+                //used to automatically scroll image into view once generated
                 imgElement.onload = () => {
                     document.querySelector(".image-box").scrollIntoView({behavior: "smooth"});
                 };
                 imgElement.src = photo;
+                //reveals box containing image
                 document.querySelector(".image-box").style.display = 'block';
             })
             .catch(error => console.error('Error fetching image:', error));
