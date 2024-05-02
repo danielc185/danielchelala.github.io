@@ -76,6 +76,7 @@
                 <div class = "image-box">
                     <center>
                         <img id = "image">
+                        <h3 id = "error-message"></h3>
                     </center>
                 </div>
             </div>
@@ -108,15 +109,30 @@
             })
             .then(response => response.blob())
             .then(blob => {
-                const photo = URL.createObjectURL(blob);
-                const imgElement = document.getElementById("image");
-                //used to automatically scroll image into view once generated
-                imgElement.onload = () => {
+                if(blob.type.startsWith('image/')) {
+                    document.getElementById("error-message").style.display = "none";
+                    const photo = URL.createObjectURL(blob);
+                    const imgElement = document.getElementById("image");
+                    //used to automatically scroll image into view once generated
+                    imgElement.onload = () => {
+                        document.querySelector(".image-box").scrollIntoView({behavior: "smooth"});
+                    };
+                    imgElement.src = photo;
+                    //reveals box containing image
+                    document.querySelector(".image-box").style.display = 'block';
+                    //reveals image in case it was previously made hidden via failure to fetch image
+                    document.getElementById("image").style.display = "block";
+                }
+                //display error message if an image was unable to be fetched
+                //hide image if one was already generated previously
+                else {
+                    document.getElementById("image").style.display = "none";
+                    document.querySelector(".image-box").style.display = 'block';
+                    document.getElementById("error-message").innerHTML = "Request failed. API is potentially unavailable at the moment.";
+                    document.getElementById("error-message").style.display = "block";
+                    //automatically scroll error message into view
                     document.querySelector(".image-box").scrollIntoView({behavior: "smooth"});
-                };
-                imgElement.src = photo;
-                //reveals box containing image
-                document.querySelector(".image-box").style.display = 'block';
+                }
             })
             .catch(error => console.error('Error fetching image:', error));
         }
